@@ -1,7 +1,7 @@
 from flask import Flask
 # from .routes import main
 from .routes import mongo, main
-
+import os
 def create_app():
     app = Flask(__name__)
   
@@ -11,7 +11,7 @@ def create_app():
     # }
     
     app.secret_key = "cwFXy5ALzg"
-    app.config["MONGO_URI"] = "mongodb+srv://ducpn:dZDwXaK1COBWoSnv@cluster0.5rputdg.mongodb.net/d_english"
+    app.config["MONGO_URI"] = os.environ['MONGODB_URI']
     
     mongo.init_app(app)
     app.register_blueprint(main)

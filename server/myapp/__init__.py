@@ -1,19 +1,19 @@
 from flask import Flask
-import os
-from .models import db
-from .routes import main
+# from .routes import main
+from .routes import mongo, main
 
 def create_app():
     app = Flask(__name__)
-    print("DATABASE_NAME:", os.environ.get('DATABASE_NAME'))
-    print("MONGODB_URI:", os.environ.get('MONGODB_URI'))
+  
+    # app.config['MONGODB_SETTINGS'] = {
+    #     'db': os.environ['DATABASE_NAME'],
+    #     'host': os.environ['MONGODB_URI'],
+    # }
     
-    app.config['MONGODB_SETTINGS'] = {
-        'db': os.environ['DATABASE_NAME'],
-        'host': os.environ['MONGODB_URI'],
-    }
+    app.secret_key = "cwFXy5ALzg"
+    app.config["MONGO_URI"] = "mongodb+srv://ducpn:dZDwXaK1COBWoSnv@cluster0.5rputdg.mongodb.net/d_english"
     
-    db.init_app(app)
+    mongo.init_app(app)
     app.register_blueprint(main)
 
     return app

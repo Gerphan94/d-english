@@ -1,4 +1,6 @@
 from flask import Flask
+from flask_cors import CORS
+
 # from .routes import main
 from .routes import mongo, main
 import os
@@ -12,6 +14,7 @@ def create_app():
     
     app.secret_key = "cwFXy5ALzg"
     app.config["MONGO_URI"] = os.environ['MONGODB_URI']
+    cors = CORS(app, resources={r"/*": {"origins": "*"}})
     
     mongo.init_app(app)
     app.register_blueprint(main)

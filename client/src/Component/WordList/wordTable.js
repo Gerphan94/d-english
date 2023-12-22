@@ -3,7 +3,7 @@ import ViewRow from './wordRowView';
 
 function WordTable() {
     return (
-        <div className='w-full top-0'>
+        <div className='w-2/3 top-0'>
             <div className='top-0 sticky bg-white pt-2'>
                 <div className='flex w-full bg-slate-700 text-white text-md p-1'>
                     <div className='w-10 text-center'>#</div>

@@ -21,7 +21,7 @@ function Navbar({ clicked, setClick }) {
             </ul>
             </li>
          
-            <Link className={menuClass} to="/words">
+            <Link className={menuClass} to="/subjects">
               Words
             </Link>
         </ul>

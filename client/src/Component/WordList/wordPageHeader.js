@@ -2,10 +2,10 @@ import React, { useState, useEffect } from "react";
 import Select from 'react-select'
 
 
-function PageHeader( {handleOpenModal}) {
-    const apiUrl = process.env.REACT_APP_API_URL + 'get_classifies';
+function PageHeader({ setSubject, handleOpenModal }) {
+    const apiUrl = process.env.REACT_APP_API_URL + 'get_subjects';
 
-    const [classifies, setClassifies] = useState([]);
+    const [subjects, setSubjects] = useState([]);
 
     useEffect(() => {
         let options = [];
@@ -22,7 +22,7 @@ function PageHeader( {handleOpenModal}) {
                     });
                 });
 
-                setClassifies(options);
+                setSubjects(options);
 
 
             } catch (error) {
@@ -32,18 +32,26 @@ function PageHeader( {handleOpenModal}) {
         fetchData();
     }, [apiUrl]);
 
+    const handleChange = (selectedOption) => {
+        setSubject(selectedOption);
+        console.log(selectedOption);
+    }
+
     return (
-        <>
+        <div className="flex justify-between p-10	">
             <Select
                 className="text-sm w-60 text-left font-normal"
-                options={classifies}
+                options={subjects}
+                onChange={handleChange}
             />
-            <div>    
-            <button onClick={() => handleOpenModal() } className="border  text-black px-3 py-1 opacity-80 hover:opacity-100" >Add section</button>
-            <button onClick={() => handleOpenModal() } className="border  text-black px-3 py-1 opacity-80 hover:opacity-100" >Add word</button>
+            <div>
+                <button onClick={() => handleOpenModal()} className="border  text-black px-3 py-1 opacity-80 hover:opacity-100" >Add section</button>
+                <button onClick={() => handleOpenModal()} className="border  text-black px-3 py-1 opacity-80 hover:opacity-100" >Add word</button>
             </div>
+        </div>
 
-        </>
+
+
     )
 
 

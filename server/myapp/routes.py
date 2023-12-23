@@ -19,52 +19,47 @@ def get_users():
     users_list = list(users)
     return json.loads(json_util.dumps(users_list))
 
-# CLASSIFY
-# get classify
-@main.route('/api/get_classifies', methods=['GET'])
-def get_classifies():
-    classifies = mongo.db.classify.find()
-    classifies_list = list(classifies)
-    return json.loads(json_util.dumps(classifies_list))
+# SUBJECT
+# get subject
+@main.route('/api/get_subjects', methods=['GET'])
+def get_subjects():
+    subjects = mongo.db.subject.find()
+    return json.loads(json_util.dumps(list(subjects)))
 
-# insert classify
-@main.route('/api/add_classify', methods=["POST"])
-def add_classify():
+# insert subject
+@main.route('/api/add_subject', methods=["POST"])
+def add_subject():
     data = request.get_json()
     name = data['name']
     
     new_data = {
         "name": name
     }
-    _id = mongo.db.classify.insert_one(new_data).inserted_id
+    _id = mongo.db.subject.insert_one(new_data).inserted_id
     return jsonify({"message": "Success!"})
-
 
 # SECTION
 # get section
-@main.route('/api/get_sections/<string:classify_id>', methods=['GET'])
-def get_sections(classify_id):
-    classify_objId = ObjectId(classify_id)
-    sections = mongo.db.section.find({'classify_id': classify_objId})
-    sections_list = list(sections)
-    return json.loads(json_util.dumps(sections_list))
+@main.route('/api/get_sections/<string:subject_id>', methods=['GET'])
+def get_sections(subject_id):
+    objID = ObjectId(subject_id)
+    sections = mongo.db.section.find({'subject_id': objID})
+    return json.loads(json_util.dumps(list(sections)))
     
-
 # insert section
-@main.route('/api/add_section/<string:classify_name>', methods=["POST"])
-def add_section(classify_name):
+@main.route('/api/add_section/<string:subject_id>', methods=["POST"])
+def add_section(subject_id):
     
-    classify = mongo.db.classify.find_one_or_404({'name': classify_name})
-    if classify:
+    subject = mongo.db.subject.find_one_or_404({'name': subject_id})
+    if subject:
         data = request.get_json()
         name = data['name']
         new_data = {
             'name': name,
-            'classify_name': classify_name
+            'subject_id': subject_id
         }
         _id = mongo.db.section.insert_one(new_data).inserted_id
         return jsonify({"message": "Success!"})
-
 
 
 # get word

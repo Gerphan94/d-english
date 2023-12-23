@@ -5,6 +5,9 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Navbar from './Component/navBar';
 import WordPage from './Component/WordList/wordPage';
 import HomePage from './Component/HomePage/homePage';
+import FlashPage from './Component/FlashPage/flashPage';
+
+import NotFound from './Page/404';
 
 function App() {
 
@@ -25,15 +28,27 @@ function App() {
               }
             />
             <Route
-              path="/words"
+              path="/subjects"
               element={
                 <>
                   <Helmet>
-                    <title>Words</title>
+                    <title>Subjects</title>
                   </Helmet>
                   <WordPage />
                 </>
               } />
+              <Route
+              path="/flash/:section_id"
+              element={
+                <>
+                  <Helmet>
+                    <title>Subjects</title>
+                  </Helmet>
+                  <FlashPage />
+                </>
+              } />
+
+              <Route path="*" element={<NotFound />} />
           </Routes>
         </HelmetProvider>
 

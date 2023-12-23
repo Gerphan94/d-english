@@ -14,14 +14,10 @@ function FlashPage() {
     ]
 
     const { section_id } = useParams();
-    const [wordIndex, setWordIndex] = useState(-1);
-
+    const [wordIndex, setWordIndex] = useState(0);
 
     const [words, setWords] = useState([]);
     const vocabulary_array = ["Ubiquitous", "Ephemeral", "Sycophant", "Cacophony", "Pernicious", "Quixotic", "Voracious", "Mellifluous", "Petrify", "Esoteric"]
-
-    // setWords(vocabulary_array)
-
 
     return (
         <div className="mt-16 bg-slate-5 flex justify-center">
@@ -33,12 +29,11 @@ function FlashPage() {
                         <FlashTab name={tab} />
                     ))}
                 </div>
-                <div className="mt-10">
-                    <FlashCard word={vocabulary_array[wordIndex]} />
-                </div>
-                <div>
-                    <FlashFooter setWordIndex={setWordIndex} />
-                </div>
+
+                <FlashCard word={vocabulary_array[wordIndex]} />
+
+                <FlashFooter setWordIndex={setWordIndex} />
+
 
 
             </div>

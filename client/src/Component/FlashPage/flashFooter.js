@@ -7,25 +7,26 @@ function FlashFooter( { setWordIndex }) {
     const reducer = (state, action) => {
         switch (action) {
             case "NEXT":
-                return state = state + 1;
+                state = state + 1;
+                setWordIndex(state);
+                return state;
             case "PREVIOUS":
-                return state = state - 1;
+                state = state - 1;
+                setWordIndex(state);
+                return state;
             default:
                 return state;
         }
+        
     }
-    const [page, dispatch] = useReducer(reducer, 1)
-
-    useEffect(() => {
-        setWordIndex(page);
-    }, [page]);
+    const [page, dispatch] = useReducer(reducer, 0);
 
     return (
 
         <>
          <div className="mt-5 border-b-2 border-slate-400 p-4">
                 <div className="flex gap-10 justify-center items-center text-xl">
-                    {page === 1 ? (
+                    {page === 0 ? (
                         <button disabled={true} onClick={() => dispatch("PREVIOUS")}>
                             <MdArrowBackIos className="text-gray-400" />
                         </button>
@@ -34,10 +35,10 @@ function FlashFooter( { setWordIndex }) {
                             <MdArrowBackIos className="text-blue-600" />
                         </button>
                     )}
-                    <div>
-                        {page}/{max_page}
+                    <div className="w-14">
+                        {page+1}/{max_page}
                     </div>
-                    {page === max_page ? (
+                    {page === max_page-1 ? (
                         <button disabled={true} onClick={() => dispatch("NEXT")}>
                             <MdArrowForwardIos className="text-gray-400" />
                         </button>

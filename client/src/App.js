@@ -3,7 +3,7 @@ import { Helmet, HelmetProvider } from 'react-helmet-async';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 // import js
 import Navbar from './Component/navBar';
-import WordPage from './Component/WordList/wordPage';
+import SubjectPage from './Component/SubjectPage/SubjectPage';
 import HomePage from './Component/HomePage/homePage';
 import FlashPage from './Component/FlashPage/flashPage';
 
@@ -34,7 +34,7 @@ function App() {
                   <Helmet>
                     <title>Subjects</title>
                   </Helmet>
-                  <WordPage />
+                  <SubjectPage />
                 </>
               } />
               <Route

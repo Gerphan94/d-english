@@ -50,16 +50,20 @@ def get_sections(subject_id):
 @main.route('/api/add_section/<string:subject_id>', methods=["POST"])
 def add_section(subject_id):
     
-    subject = mongo.db.subject.find_one_or_404({'name': subject_id})
+    objID = ObjectId(subject_id)
+    
+    subject = mongo.db.subject.find_one_or_404({'_id': objID})
     if subject:
         data = request.get_json()
-        name = data['name']
-        new_data = {
-            'name': name,
-            'subject_id': subject_id
-        }
-        _id = mongo.db.section.insert_one(new_data).inserted_id
-        return jsonify({"message": "Success!"})
+        name = data['section_name']
+        if name:
+            new_data = {
+                'name': name,
+                'subject_id': objID
+            }
+            _id = mongo.db.section.insert_one(new_data).inserted_id
+            return jsonify({"message": "Success!"})
+    return make_response(jsonify({'error': 'Bad Request'}), 400) 
 
 
 # get word

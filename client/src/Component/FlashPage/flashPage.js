@@ -8,9 +8,9 @@ function FlashPage() {
 
     const tabs = [
         "Flash Card",
-        "",
-        "",
-        ""
+        "Test 1",
+        "Test 2",
+        "New Word"
     ]
 
     const { section_id } = useParams();
@@ -23,7 +23,11 @@ function FlashPage() {
         <div className="mt-16 bg-slate-5 flex justify-center">
 
             <div className="w-1/2 mt-28">
+                {/* HEADER */}
+                <div>
 
+                </div>
+                {/* TAB */}
                 <div className="grid grid-cols-4 gap-4">
                     {tabs.map((tab) => (
                         <FlashTab name={tab} />

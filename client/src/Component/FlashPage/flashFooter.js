@@ -17,12 +17,10 @@ function FlashFooter( { setWordIndex }) {
             default:
                 return state;
         }
-        
     }
     const [page, dispatch] = useReducer(reducer, 0);
 
     return (
-
         <>
          <div className="mt-5 border-b-2 border-slate-400 p-4">
                 <div className="flex gap-10 justify-center items-center text-xl">

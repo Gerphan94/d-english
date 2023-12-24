@@ -39,19 +39,17 @@ def add_subject():
     return jsonify({"message": "Success!"})
 
 # SECTION
-# get section
+# get section list
 @main.route('/api/get_sections/<string:subject_id>', methods=['GET'])
 def get_sections(subject_id):
     objID = ObjectId(subject_id)
     sections = mongo.db.section.find({'subject_id': objID})
     return json.loads(json_util.dumps(list(sections)))
-    
+
 # insert section
 @main.route('/api/add_section/<string:subject_id>', methods=["POST"])
 def add_section(subject_id):
-    
     objID = ObjectId(subject_id)
-    
     subject = mongo.db.subject.find_one_or_404({'_id': objID})
     if subject:
         data = request.get_json()
@@ -65,6 +63,12 @@ def add_section(subject_id):
             return jsonify({"message": "Success!"})
     return make_response(jsonify({'error': 'Bad Request'}), 400) 
 
+# Get a section
+@main.route('/api/get_section/<string:section_id>', methods=["GET"])
+def get_section(section_id):
+    objID = ObjectId(section_id)
+    section = mongo.db.section.find_one_or_404({'_id': objID})
+    return json.loads(json_util.dumps(section))
 
 # get word
 @main.route('/api/get_words/<string:section_id>', methods=['GET'])

@@ -42,7 +42,7 @@ function App() {
               element={
                 <>
                   <Helmet>
-                    <title>Subjects</title>
+                    <title>Flash Card</title>
                   </Helmet>
                   <FlashPage />
                 </>

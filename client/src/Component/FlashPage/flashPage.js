@@ -7,18 +7,16 @@ import WordModal from "./WordModal";
 
 function FlashPage() {
 
-    console.log("Render -----")
+    console.log("Start render -----")
     const { section_id } = useParams();
     const [words, setWords] = useState([]);
     const [section_name, setSection_name] = useState('test');
     const [openWordModal, setOpenWordModal] = useState(false);
     const [wordIndex, setWordIndex] = useState(0);
     
-    
-    
-
     useEffect(() => {
         const fetchData = async () => {
+            console.log("how many fetchign...")
             try {
                 // Fetch both section info and words in parallel
                 const [sectionInfoResponse, wordsResponse] = await Promise.all([
@@ -43,6 +41,7 @@ function FlashPage() {
     const [word, setWord] = useState('');
 
     useEffect(() => {
+        console.log("2222222")
         console.log(words[wordIndex]);
         setWord(words[wordIndex]);
     }, [wordIndex, words]);

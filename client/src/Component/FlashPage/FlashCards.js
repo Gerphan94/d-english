@@ -39,7 +39,6 @@ function FlashCards() {
     const cards = words.map((word, index) => {
         return <FlashCard word={word} />;
     });
-
     const max_page = cards.length;
     const reducer = (state, action) => {
         switch (action) {
@@ -72,8 +71,6 @@ function FlashCards() {
                     <div className="mt-6 px-10">
                         {cards[wordIndex]}
                     </div>
-
-
                     <div className="mt-5 border-b-2 border-slate-400 p-4">
                         <div className="flex gap-10 justify-center items-center text-xl">
                             {page === 0 ? (
@@ -99,11 +96,8 @@ function FlashCards() {
                             )}
                         </div>
                     </div>
-
                 </div>
             </div>
-
-
         </>
     )
 }

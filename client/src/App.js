@@ -5,7 +5,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Navbar from './Component/navBar';
 import SubjectPage from './Component/SubjectPage/SubjectPage';
 import HomePage from './Component/HomePage/homePage';
-import FlashPage from './Component/FlashPage/flashPage';
+import FlashCards from './Component/FlashPage/FlashCards';
 
 import NotFound from './Page/404';
 
@@ -44,7 +44,7 @@ function App() {
                   <Helmet>
                     <title>Flash Card</title>
                   </Helmet>
-                  <FlashPage />
+                  <FlashCards />
                 </>
               } />
 

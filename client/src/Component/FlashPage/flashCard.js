@@ -1,33 +1,39 @@
-import React, { useEffect, useState} from "react";
-import { useSpring, animated } from 'react-spring';
+import React, { useState } from "react";
 
 function FlashCard({ word }) {
+    const eng = word.english;
+    let vie = '';
 
-    
-   
-    const props = useSpring({
-        opacity: 1,
-        transform: 'translateX(0%)',
-        from: { opacity: 0, transform: 'translateX(50%)' },
-        reset: true,
+    word.vietnamese.forEach(element => {
+        vie = vie + element.define + '\n';
     });
 
+    const [isRotated, setIsRotated] = useState(false);
+
+  
+
+    const handleClick = () => {
+        setIsRotated(!isRotated);
+    }
 
     return (
         <>
-            <animated.div style={props}>
-                <div className="w-full origin-bottom-left cursor-pointer">
-                    <div className="h-72 rounded-lg border border-gray-300 bg-white shadow-xl">
-                        <div className="w-full h-full flex justify-center items-center text-4xl select-none">
-                            {word}
-                        </div>
+            <div
+                className="w-full origin-bottom-left cursor-pointer"
+               
+                onClick={handleClick}
+            >
+                <div className="h-72 rounded-lg border border-gray-300 bg-white shadow-xl">
+                    <div className="w-full h-full flex justify-center items-center text-4xl select-none">
+                        {
+                            (isRotated) ?
+                                vie : eng
+                        }
                     </div>
                 </div>
-            </animated.div>
-            
+            </div>
         </>
-
-    )
+    );
 }
 
 export default FlashCard;

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import './FlashCard.css'; // Import the CSS file for styling
 
 function FlashCard({ word }) {
     const eng = word.english;
@@ -13,15 +14,19 @@ function FlashCard({ word }) {
     return (
         <>
             <div
-                className="w-full origin-bottom-left cursor-pointer"
+                className={`flashcard ${isRotated ? 'flipped' : ''}`}
                 onClick={handleClick}
             >
                 <div className="h-72 rounded-lg border border-gray-300 bg-white shadow-xl">
                     <div className="w-full h-full flex justify-center items-center text-4xl select-none">
-                        {
-                            (isRotated) ?
-                                vie : eng
-                        }
+
+                        <div className="side">
+                            {
+                                (isRotated) ?
+                                    vie : eng
+                            }
+                        </div>
+
                     </div>
                 </div>
             </div>

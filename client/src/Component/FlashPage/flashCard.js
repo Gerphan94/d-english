@@ -7,31 +7,21 @@ function FlashCard({ word }) {
     word.vietnamese.forEach(element => {
         vie = vie + element.define + '\n';
     });
-    const [isRotated, setIsRotated] = useState(false);
-    const handleClick = () => {
-        setIsRotated(!isRotated);
-    }
-    return (
-        <>
-            <div
-                className={`flashcard ${isRotated ? 'flipped' : ''}`}
-                onClick={handleClick}
-            >
-                <div className="h-72 rounded-lg border border-gray-300 bg-white shadow-xl">
-                    <div className="w-full h-full flex justify-center items-center text-4xl select-none">
+    const [side, setSide] = useState();
 
-                        <div className="side">
-                            {
-                                (isRotated) ?
-                                    vie : eng
-                            }
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-        </>
-    );
+  function handleClick() {
+    console.log("clicked!");
+    setSide(!side);
+    console.log(side);
+  }
+  return (
+    <div className={`card ${side ? "side" : ""}`} onClick={handleClick}>
+      
+      {/* {side ? card.fields.side1 : card.fields.side2} */}
+      <div className="front">{eng}</div>
+      <div className="back">{vie}</div>
+    </div>
+  );
 }
 
 export default FlashCard;

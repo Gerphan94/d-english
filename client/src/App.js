@@ -6,7 +6,7 @@ import Navbar from './Component/navBar';
 import SubjectPage from './Component/SubjectPage/SubjectPage';
 import HomePage from './Component/HomePage/homePage';
 import FlashCards from './Component/FlashPage/FlashCards';
-
+import ManagerPage from './Component/WordManager/ManagerPage';
 import NotFound from './Page/404';
 
 function App() {
@@ -28,6 +28,17 @@ function App() {
               }
             />
             <Route
+              path="/manager"
+              element={
+                <>
+                  <Helmet>
+                    <title>Manager Page</title>
+                  </Helmet>
+                  <ManagerPage />
+                </>
+              } />
+
+            <Route
               path="/subjects"
               element={
                 <>
@@ -37,7 +48,7 @@ function App() {
                   <SubjectPage />
                 </>
               } />
-              <Route
+            <Route
               path="/flash/:section_id"
               element={
                 <>
@@ -48,7 +59,7 @@ function App() {
                 </>
               } />
 
-              <Route path="*" element={<NotFound />} />
+            <Route path="*" element={<NotFound />} />
           </Routes>
         </HelmetProvider>
 

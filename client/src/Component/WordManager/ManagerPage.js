@@ -1,12 +1,18 @@
-import React from 'react';
+import React, { useState } from 'react';
+import PageHeader from './PageHeader';
 
 function ManagerPage() {
 
+
+
+    const [curSubject, setCurSubject] = useState([]);
+
     return (
 
-        <>
-        <div>Manage</div>
-        </>
+        <div className='mt-16'>
+            <PageHeader setCurSubject={setCurSubject} />
+            {curSubject.value}
+        </div>
     )
 }
 

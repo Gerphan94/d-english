@@ -8,7 +8,6 @@ function FlashTab({ setOpenWordModal }) {
     const handleClick = () => {
         setOpenWordModal(true)
     }
-
     return (
         <>
             <div className="grid grid-cols-4 gap-4">

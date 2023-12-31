@@ -60,7 +60,13 @@ def add_section(subject_id):
                 'subject_id': objID
             }
             _id = mongo.db.section.insert_one(new_data).inserted_id
-            return jsonify({"message": "Success!"})
+            responseData = {
+                "_id": _id,
+                "name": name,
+                "subject_id": objID
+            }
+            print(responseData)
+            return json.loads(json_util.dumps(responseData))
     return make_response(jsonify({'error': 'Bad Request'}), 400) 
 
 # Get a section

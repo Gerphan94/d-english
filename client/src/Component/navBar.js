@@ -13,17 +13,19 @@ function Navbar({ clicked, setClick }) {
             Topic
             <ul className="mt-2 absolute hidden bg-blue-500 p-2 space-y-2 group-hover:block z-50 w-40">
               <li className='inline-block'>
-              <Link className="text-white inline-block opacity-80 hover:opacity-100" to="/detail/common">Animal</Link>
-              </li>
-                
                 <Link className="text-white inline-block opacity-80 hover:opacity-100" to="/detail/common">Animal</Link>
+              </li>
+
+              <Link className="text-white inline-block opacity-80 hover:opacity-100" to="/detail/common">Animal</Link>
               {/* Add more sub-menu items as needed */}
             </ul>
-            </li>
-         
-            <Link className={menuClass} to="/subjects">
-              Words
-            </Link>
+          </li>
+          <Link className={menuClass} to="/subjects">
+            Words Flash
+          </Link>
+          <Link className={menuClass} to="/manager">
+            Words List
+          </Link>
         </ul>
       </nav>
     </div>

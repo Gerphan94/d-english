@@ -1,14 +1,16 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useState, useEffect } from 'react';
 import PageHeader from './PageHeader';
 import WordTable from './WordTable';
 import WordModal from './WordModal';
-import { FaCheck } from "react-icons/fa6";
+import SectionForm from './SectionForm';
 
 function ManagerPage() {
 
     const [curSubject, setCurSubject] = useState([]);
     const [sections, setSections] = useState([]);
     const [isOpenModal, setIsOpenModal] = useState(false)
+    const [isOpenSectionForm, setIsOpenSectionForm] = useState(false);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -26,29 +28,27 @@ function ManagerPage() {
         }
     }, [curSubject]);
 
-    const handeClickAddSection = (id) => {
-        console.log(id);
-    }
-
     const handleOpenWordModal = (id) => {
         console.log("-----------------", sections);
         setIsOpenModal(true);
         console.log(id);
     }
 
+
     return (
         <>
             <div className='mt-16'>
-                <PageHeader setCurSubject={setCurSubject} />
+                
                 <div className='w-full flex justify-center'>
-                    <div className='w-2/3'>
+                    <div className='w-2/3 mt-2'>
+                    <PageHeader setCurSubject={setCurSubject} />
                         {sections.map((section) => (
-                            <div className='pb-2'>
+                            <div key={section['_id']['$oid']} className='pb-2'>
                                 <div className='text-lg font-bold text-left py-1'>
                                     {section["name"]}
                                 </div>
                                 <div>
-                                    <WordTable section_id={section['_id']['$oid']} />
+                                    <WordTable key={section['_id']['$oid']} section_id={section['_id']['$oid']} setIsOpenModal={setIsOpenModal} />
                                 </div>
                                 <div className='flex justify-start py-2'>
                                     <button
@@ -58,34 +58,9 @@ function ManagerPage() {
                                         Add Word
                                     </button>
                                 </div>
-
-
-
-
-
                             </div>
                         ))}
-                        <div className='flex mb-40'>
-                            <button
-                                href='#'
-                                className=' text-blue-400 hover:underline'
-                                onClick={() => handeClickAddSection(curSubject["value"])}>
-                                Add Section
-                            </button>
-                            <div className='flex gap-5'>
-                                <label>Title</label>
-                                <input type='text' className='border rounded-md' />
-                                <span className='w-6 border'>
-                                    <FaCheck />
-                                </span>
-                                <span className='w-6 border'>
-                                    <FaCheck />
-                                </span>
-                            </div>
-
-
-                        </div>
-
+                        <SectionForm subject_id={curSubject["value"]} sections={sections} setSections={setSections} />
                     </div>
 
                 </div>

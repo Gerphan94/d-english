@@ -1,8 +1,8 @@
-import React, {useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import Select from 'react-select'
 
-function PageHeader({ setCurSubject}) {
-    // Setup subjects option for 
+function PageHeader({ setCurSubject }) {
+  // Setup subjects option for 
   const [subjects, setSubjects] = useState([]);
   useEffect(() => {
     let options = [];
@@ -25,19 +25,21 @@ function PageHeader({ setCurSubject}) {
     fetchData();
   }, []);
 
-    const handleChange = (selectedOption) => {
-        setCurSubject(selectedOption);
-        console.log(selectedOption);
-    }
-    return (
-        <div className="flex justify-between p-10	">
-            <Select
-                className="text-sm w-60 text-left font-normal"
-                options={subjects}
-                onChange={handleChange}
-            />
-        </div>
-    )
+  const handleChange = (selectedOption) => {
+    setCurSubject(selectedOption);
+    console.log(selectedOption);
+  }
+  return (
+    <>
+      <Select
+        className="text-sm w-60 text-left font-normal"
+        options={subjects}
+        onChange={handleChange}
+      />
+    </>
+
+
+  )
 }
 
 export default PageHeader;

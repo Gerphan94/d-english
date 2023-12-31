@@ -50,10 +50,7 @@ function SubjectPage() {
   }, [subject]);
 
   const [isOpenModal, setIsOpenModal] = useState(false);
-  const handleOpenModal = () => {
-    setIsOpenModal(true);
-  }
-
+ 
   return (
     <div className="flex mt-14 h-screen bg-slate-50 justify-center">
       {/* <SideBar setSubject={setSubject} /> */}
@@ -65,17 +62,6 @@ function SubjectPage() {
               {sections.map((section) => (
                 <SectionCard section={section} />
               ))}
-
-              <div
-                className="border border-slate-400 rounded-lg bg-white h-48 text-left hover:border-b-orange-400 hover:border-b-4 cursor-pointer"
-
-              >
-                <button className="w-full h-full flex justify-center items-center" onClick={() => setIsOpenModal(true)}>
-                  <FaPlus className="text-6xl" />
-                </button>
-
-              </div>
-
 
             </div>
           </div>

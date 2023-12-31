@@ -4,10 +4,8 @@ import Select from 'react-select'
 export default function WordModal({ sections, setIsOpenModal }) {
 
 
-    const section_ar = [];
-    if (sections) {
-        section_ar = sections;
-    }
+
+
     const TypeOptions = [
         { value: 'n', label: 'Noun' },
         { value: 'adj', label: 'Adjective' },
@@ -15,22 +13,19 @@ export default function WordModal({ sections, setIsOpenModal }) {
         { value: 'adv', label: 'Adverb' },
         { value: 'other', label: 'Other' }
     ];
+
     const SectionOptions = [];
-
-
-    section_ar.vietnamese.forEach(section => {
+    sections.forEach(section => {
         SectionOptions.push({ value: section['_id']['$oid'], label: section['name'] })
-    });
+    })
 
-
-
-    console.log('modal------------', sections);
     const handleSubmit = async (e) => {
         e.preventDefault();
         // Read the form data
         const form = e.target;
         const formData = new FormData(form);
         const formJson = Object.fromEntries(formData.entries());
+        console.log(formJson);
 
     }
 
@@ -38,7 +33,7 @@ export default function WordModal({ sections, setIsOpenModal }) {
         <>
             <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
                 <div className="relative w-1/3 my-6 mx-auto max-w-3xl">
-                    <form method="post" onSubmit={(e) => handleSubmit(e)} autoComplete={false}>
+                    <form method="post" onSubmit={(e) => handleSubmit(e)} autoComplete='off'>
                         {/*content*/}
                         <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
                             {/*header*/}
@@ -46,24 +41,66 @@ export default function WordModal({ sections, setIsOpenModal }) {
                                 <div className="text-2xl font-semibold select-none">Add Word</div>
                             </div>
                             {/*body*/}
-                            <div className="relative p-6 text-left">
-
+                            <div className="relative p-6 text-left text-sm">
                                 <div>
-                                    <Select name="section_of_word" options={SectionOptions} required={true} />
-                                    <Select name="type_of_word" options={TypeOptions} required={true} />
-                                    <input
-                                        type="text"
-                                        name="english"
-                                        className="w-full px-2 py-1 border border-gray-300 rounded-sm outline-none"
-                                        placeholder="Enter section name..."
-                                        required={true}
-                                    >
-                                    </input>
+                                    <div className="py-2">
+                                        <Select className="" name="section_of_word" options={SectionOptions} required={true} />
+
+                                    </div>
+                                    <div className="py-2">
+                                        <input
+                                            type="text"
+                                            name="english"
+                                            className="w-full px-2 py-2 border border-gray-300 rounded-sm outline-none"
+                                            placeholder="Enter english word ..."
+                                            required={true}
+                                        ></input>
+                                    </div>
+                                    {/* \Define 1 */}
+                                    <div className="w-full py-3">
+                                        <div className="flex lg:flex-row flex-col gap-2 py-1">
+                                            <Select className="lg:w-56 w-full" name="type_of_word_1" options={TypeOptions} required={true} />
+
+                                            <input
+                                                type="text"
+                                                name="define1"
+                                                className="w-full px-2 py-1 border border-gray-300 rounded-sm outline-none"
+                                                placeholder="Enter define 1 ..."
+                                                required={true}
+                                            >
+                                            </input>
+                                            <input className="w-10 text-gray-400" type="button" disabled={true}  value={'Clear'}></input>
+                                        </div>
+
+
+                                        <div className="flex lg:flex-row flex-col gap-2 py-1">
+                                            <Select className="lg:w-56 w-full" name="type_of_word_2" options={TypeOptions} required={false} />
+                                            <input
+                                                type="text"
+                                                name="define2"
+                                                className="w-full px-2 py-1 border border-gray-300 rounded-sm outline-none"
+                                                placeholder="Enter define 2 ..."
+                                                required={false}
+                                            >
+                                            </input>
+                                            <input  className="w-10 cursor-pointer text-red-500 hover:underline" type="button" value={'Clear'}></input>
+
+                                        </div>
+
+                                        
+
+
+                                    </div>
+                                    {/* \Define 2 */}
+                                    <div className="py-3 flex gap-4">
+
+
+                                    </div>
                                 </div>
 
                             </div>
                             {/*footer*/}
-                            <div className="flex items-center justify-end p-6 border-t border-solid border-blueGray-200 rounded-b">
+                            <div className="flex items-center justify-end p-2 border-t border-solid border-blueGray-200 rounded-b">
                                 <button
                                     className="text-red-500 background-transparent font-bold px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150 border-red-500 border opacity-80 hover:opacity-100"
                                     type="button"
@@ -72,7 +109,7 @@ export default function WordModal({ sections, setIsOpenModal }) {
                                     Close
                                 </button>
                                 <input
-                                    className="bg-blue-500 text-white active:bg-emerald-600 font-bold text-sm px-6 py-2  shadow opacity-80 hover:opacity-100 hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                                    className="bg-blue-500 text-white active:bg-emerald-600 font-bold text-sm px-6 py-2 shadow opacity-80 hover:opacity-100 hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150 cursor-pointer"
                                     type="submit"
                                     value="Submit"
                                 >

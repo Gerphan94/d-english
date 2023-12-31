@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import PageHeader from './PageHeader';
 import WordTable from './WordTable';
 import WordModal from './WordModal';
+import { FaCheck } from "react-icons/fa6";
 
 function ManagerPage() {
 
@@ -30,6 +31,7 @@ function ManagerPage() {
     }
 
     const handleOpenWordModal = (id) => {
+        console.log("-----------------", sections);
         setIsOpenModal(true);
         console.log(id);
     }
@@ -56,24 +58,44 @@ function ManagerPage() {
                                         Add Word
                                     </button>
                                 </div>
+
+
+
+
+
                             </div>
                         ))}
-                        <button
-                            href='#'
-                            className='text-left underline'
-                            onClick={() => handeClickAddSection(curSubject["value"])}>
-                            Add Section
-                        </button>
+                        <div className='flex mb-40'>
+                            <button
+                                href='#'
+                                className=' text-blue-400 hover:underline'
+                                onClick={() => handeClickAddSection(curSubject["value"])}>
+                                Add Section
+                            </button>
+                            <div className='flex gap-5'>
+                                <label>Title</label>
+                                <input type='text' className='border rounded-md' />
+                                <span className='w-6 border'>
+                                    <FaCheck />
+                                </span>
+                                <span className='w-6 border'>
+                                    <FaCheck />
+                                </span>
+                            </div>
+
+
+                        </div>
+
                     </div>
 
                 </div>
 
             </div>
 
-            {isOpenModal && sections.length > 0 &&
-            <WordModal sections={sections} setIsOpenModal={setIsOpenModal} />
+            {isOpenModal &&
+                <WordModal sections={sections} setIsOpenModal={setIsOpenModal} />
             }
-            
+
 
         </>
 

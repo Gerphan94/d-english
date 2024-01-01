@@ -2,16 +2,16 @@ import React, { useState, useEffect } from "react";
 import WordModal from "./WordModal";
 import { BsTrash, BsPencilSquare, BsEye } from "react-icons/bs";
 
-function WordTable({ section_id, setModalObject, setIsOpenModal }) {
+function WordTable({ section, setModalObject, setIsOpenModal }) {
+
+
 
   const [words, setWords] = useState([]);
-  const [edtWord, setEdtWord] = useState({});
-  const [isEdit, setIsEdit] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(process.env.REACT_APP_API_URL + 'get_words/' + section_id);
+        const response = await fetch(process.env.REACT_APP_API_URL + 'get_words/' + section['_id']['$oid']);
         const data = await response.json();
         setWords(data)
       } catch (error) {
@@ -21,14 +21,14 @@ function WordTable({ section_id, setModalObject, setIsOpenModal }) {
 
     fetchData();
 
-  }, [section_id]);
+  }, [section]);
 
   const handleOpenModal = (word) => {
-    console.log('TÉTTTTTTTTTTTTT')
     setIsOpenModal(true);
     setModalObject({
       isEdit: true,
-      word: word
+      word: word,
+      section: section
     });
   }
 

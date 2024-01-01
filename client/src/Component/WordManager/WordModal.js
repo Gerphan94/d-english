@@ -4,7 +4,9 @@ import Select from 'react-select'
 function WordModal({ sections, modalObject, setIsOpenModal }) {
 
     const word = modalObject.word;
-    console.log(word);
+    const section = modalObject.section;
+    console.log(modalObject.section);
+    const [curSection, setCurSection] = useState([]);
     const [inputEng, setInputEng] = useState('');
     const [type1, setType1] = useState([]);
     const [type2, setType2] = useState([]);
@@ -44,14 +46,12 @@ function WordModal({ sections, modalObject, setIsOpenModal }) {
         if (isEdit) {
             setTitle('Edit Word');
             setInputEng(word['english']);
+            setCurSection({value: section['_id']['$oid'], label: section['name']});
             word.vietnamese.forEach((define, index) => {
                 switch (index) {
                     case 0:
                         setDefine1(define.define);
                         setType1(define.type);
-                        
-                        
-                        
                         break
 
                     default:
@@ -103,7 +103,12 @@ function WordModal({ sections, modalObject, setIsOpenModal }) {
                             <div className="relative p-6 text-left text-sm">
                                 <div>
                                     <div className="py-2">
-                                        <Select className="" name="section_of_word" options={SectionOptions} required={true} />
+                                        <Select 
+                                            className=""
+                                            name="section_of_word" 
+                                            options={SectionOptions} 
+                                            value={curSection}
+                                            required={true} />
 
                                     </div>
                                     <div className="py-2">

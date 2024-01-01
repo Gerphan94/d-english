@@ -30,11 +30,11 @@ function ManagerPage() {
     }, [curSubject]);
 
   
-    const handleOpenNewModal = (section_id) => {
+    const handleOpenNewModal = (section) => {
         setIsOpenModal(true);
         setModalObject({
           isEdit: false,
-          section_id:section_id,
+          section:section,
           word: {}
         });
 
@@ -54,7 +54,7 @@ function ManagerPage() {
                                 <div>
                                     <WordTable 
                                         key={section['_id']['$oid']} 
-                                        section_id={section['_id']['$oid']} 
+                                        section={section} 
                                         sections={sections}
                                         setIsOpenModal={setIsOpenModal}
                                         setModalObject={setModalObject} />

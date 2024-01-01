@@ -34,6 +34,7 @@ function PageHeader({ setCurSubject }) {
       <Select
         className="text-sm w-60 text-left font-normal"
         options={subjects}
+        de
         onChange={handleChange}
       />
     </>

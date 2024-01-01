@@ -11,6 +11,7 @@ function ManagerPage() {
     const [sections, setSections] = useState([]);
     const [isOpenModal, setIsOpenModal] = useState(false)
     const [isOpenSectionForm, setIsOpenSectionForm] = useState(false);
+    const [modalObject, setModalObject] = useState({});
 
     useEffect(() => {
         const fetchData = async () => {
@@ -28,19 +29,22 @@ function ManagerPage() {
         }
     }, [curSubject]);
 
-    const handleOpenWordModal = (id) => {
-        console.log("-----------------", sections);
+  
+    const handleOpenNewModal = (section_id) => {
         setIsOpenModal(true);
-        console.log(id);
-    }
+        setModalObject({
+          isEdit: false,
+          section_id:section_id,
+          word: {}
+        });
 
+    }
 
     return (
         <>
             <div className='mt-16'>
-                
                 <div className='w-full flex justify-center'>
-                    <div className='w-2/3 mt-2'>
+                    <div className='lg:w-2/3 w-full mt-2 px-2'>
                     <PageHeader setCurSubject={setCurSubject} />
                         {sections.map((section) => (
                             <div key={section['_id']['$oid']} className='pb-2'>
@@ -48,13 +52,18 @@ function ManagerPage() {
                                     {section["name"]}
                                 </div>
                                 <div>
-                                    <WordTable key={section['_id']['$oid']} section_id={section['_id']['$oid']} setIsOpenModal={setIsOpenModal} />
+                                    <WordTable 
+                                        key={section['_id']['$oid']} 
+                                        section_id={section['_id']['$oid']} 
+                                        sections={sections}
+                                        setIsOpenModal={setIsOpenModal}
+                                        setModalObject={setModalObject} />
                                 </div>
                                 <div className='flex justify-start py-2'>
                                     <button
                                         href='#'
                                         className='text-blue-400 hover:underline'
-                                        onClick={() => handleOpenWordModal(section['_id']['$oid'])}>
+                                        onClick={() => handleOpenNewModal(section['_id']['$oid'])}>
                                         Add Word
                                     </button>
                                 </div>
@@ -68,7 +77,7 @@ function ManagerPage() {
             </div>
 
             {isOpenModal &&
-                <WordModal sections={sections} setIsOpenModal={setIsOpenModal} />
+                <WordModal sections={sections} modalObject={modalObject} setIsOpenModal={setIsOpenModal} />
             }
 
 

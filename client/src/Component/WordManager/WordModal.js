@@ -6,8 +6,8 @@ function WordModal({ sections, modalObject, setIsOpenModal }) {
     const word = modalObject.word;
     console.log(word);
     const [inputEng, setInputEng] = useState('');
-    const [type1, setType1] = useState('');
-    const [type2, setType2] = useState({});
+    const [type1, setType1] = useState([]);
+    const [type2, setType2] = useState([]);
     const [define1, setDefine1] = useState('');
     const [define2, setDefine2] = useState('');
     const [title, setTitle] = useState("");
@@ -21,23 +21,22 @@ function WordModal({ sections, modalObject, setIsOpenModal }) {
     ];
 
     function getDefaultSelect(value) {
-        console.log(typeof(value), value, value.length);
-
-        if (value === 'v') {
-            console.log("PASS")
-        }
         switch (value) {
             case 'n':
-                return {label:'Noun'};
+                console.log("---------------------------------",  TypeOptions[0])
+                return TypeOptions[0];
             case 'adj':
-                return {label:'Adjective'};
+                return TypeOptions[1];
             case 'v':
-                return {label:'Verb'};
+                return TypeOptions[2];
             case 'adv':
-                return {label:'Adverb'};
+                return TypeOptions[3];
+            case 'other':
+                return TypeOptions[4];
             default:
-                return {label:'Other'};
+                return;
         }
+      
     }
 
     const isEdit = modalObject.isEdit;
@@ -57,7 +56,7 @@ function WordModal({ sections, modalObject, setIsOpenModal }) {
 
                     default:
                         setDefine2(define.define);
-                        setType2(getDefaultSelect(define.type));
+                        setType2(define.type);
                         break
                 }
             })
@@ -98,7 +97,7 @@ function WordModal({ sections, modalObject, setIsOpenModal }) {
                         <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
                             {/*header*/}
                             <div className="flex items-start justify-between p-3 border-b border-solid border-blueGray-200 rounded-t">
-                                <div className="text-2xl font-semibold select-none">{title}-{type1.label}</div>
+                                <div className="text-2xl font-semibold select-none">{title}-{type2}-{type1}</div>
                             </div>
                             {/*body*/}
                             <div className="relative p-6 text-left text-sm">
@@ -126,7 +125,7 @@ function WordModal({ sections, modalObject, setIsOpenModal }) {
                                                 className="lg:w-56 w-full"
                                                 name="type_of_word_1"
                                                 options={TypeOptions} required={true}
-                                                defaultValue={getDefaultSelect(type1)}
+                                                value={getDefaultSelect(type1)}
                                             />
 
                                             <input
@@ -147,7 +146,7 @@ function WordModal({ sections, modalObject, setIsOpenModal }) {
                                                 className="lg:w-56 w-full"
                                                 name="type_of_word_2"
                                                 options={TypeOptions}
-                                                defaultValue={type2}
+                                                value={getDefaultSelect(type2)}
                                                 required={false} />
                                             <input
                                                 type="text"

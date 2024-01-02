@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { BsTrash, BsPencilSquare, BsEye } from "react-icons/bs";
-
-
 import DeleteWord from "./DelWordModal";
+
 
 function WordTable({ section, setModalObject, setIsOpenModal }) {
   const [words, setWords] = useState([]);
@@ -82,7 +81,7 @@ return (
     </table>
     
         {isDelete &&
-        <DeleteWord />
+        <DeleteWord setIsDelete={setIsDelete}/>
         }
     
 

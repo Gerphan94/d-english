@@ -1,6 +1,6 @@
 import React from "react";
 
-function DeleteWord() {
+function DeleteWord( {setIsDelete} ) {
 
 
     return (
@@ -24,7 +24,7 @@ function DeleteWord() {
                                 <button
                                     className="text-red-500 background-transparent font-bold px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150 border-red-500 border opacity-80 hover:opacity-100"
                                     type="button"
-                                    
+                                    onClick={() => setIsDelete(false)}
                                 >
                                     Close
                                 </button>
@@ -32,6 +32,7 @@ function DeleteWord() {
                                     className="bg-blue-500 text-white active:bg-emerald-600 font-bold text-sm px-6 py-2 shadow opacity-80 hover:opacity-100 hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150 cursor-pointer"
                                     type="submit"
                                     value="Submit"
+                                    
                                 >
                                 </input>
                             </div>

@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
-import WordModal from "./WordModal";
 import { BsTrash, BsPencilSquare, BsEye } from "react-icons/bs";
 
+
+import DeleteWord from "./DelWordModal";
+
 function WordTable({ section, setModalObject, setIsOpenModal }) {
-
-
-
   const [words, setWords] = useState([]);
+  const [isDelete, setIsDelete] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -66,7 +66,12 @@ return (
                     onClick={() => handleOpenModal(word)}
 
                   ><BsPencilSquare /></button>
-                  <button className='cursor-pointer mx-1 hover:text-red-500'><BsTrash /></button>
+                  <button 
+                  className='cursor-pointer mx-1 hover:text-red-500'
+                  onClick={() => setIsDelete(true)}
+                  >
+                    
+                    <BsTrash /></button>
                 </div>
               </td>
             </tr>
@@ -75,7 +80,11 @@ return (
         })}
       </tbody>
     </table>
-
+    
+        {isDelete &&
+        <DeleteWord />
+        }
+    
 
   </div>
 

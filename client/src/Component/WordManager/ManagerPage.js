@@ -2,14 +2,16 @@
 import React, { useState, useEffect } from 'react';
 import PageHeader from './PageHeader';
 import WordTable from './WordTable';
-import WordModal from './WordModal';
+import EditWordModal from './EditWordModal';
 import SectionForm from './SectionForm';
+import AddWordModal from './AddWordModal';
 
 function ManagerPage() {
 
     const [curSubject, setCurSubject] = useState([]);
     const [sections, setSections] = useState([]);
-    const [isOpenModal, setIsOpenModal] = useState(false)
+    const [isOpenModal, setIsOpenModal] = useState(false);
+    const [isOpenAddModal, setIsOpenAddModal] = useState(false);
     const [isOpenSectionForm, setIsOpenSectionForm] = useState(false);
     const [modalObject, setModalObject] = useState({});
 
@@ -29,13 +31,13 @@ function ManagerPage() {
         }
     }, [curSubject]);
 
-  
+
     const handleOpenNewModal = (section) => {
-        setIsOpenModal(true);
+        setIsOpenAddModal(true);
         setModalObject({
-          isEdit: false,
-          section:section,
-          word: {}
+            isEdit: false,
+            section: section,
+            word: {}
         });
 
     }
@@ -45,16 +47,20 @@ function ManagerPage() {
             <div className='mt-16'>
                 <div className='w-full flex justify-center'>
                     <div className='lg:w-2/3 w-full mt-2 px-2'>
-                    <PageHeader setCurSubject={setCurSubject} />
+                        <div className='flex gap-4'>
+                            <PageHeader setCurSubject={setCurSubject} />
+                            <AddWordModal sections={sections} />
+                        </div>
+
                         {sections.map((section) => (
                             <div key={section['_id']['$oid']} className='pb-2'>
                                 <div className='text-lg font-bold text-left py-1'>
                                     {section["name"]}
                                 </div>
                                 <div>
-                                    <WordTable 
-                                        key={section['_id']['$oid']} 
-                                        section={section} 
+                                    <WordTable
+                                        key={section['_id']['$oid']}
+                                        section={section}
                                         sections={sections}
                                         setIsOpenModal={setIsOpenModal}
                                         setModalObject={setModalObject} />
@@ -77,7 +83,10 @@ function ManagerPage() {
             </div>
 
             {isOpenModal &&
-                <WordModal sections={sections} modalObject={modalObject} setIsOpenModal={setIsOpenModal} />
+                <EditWordModal sections={sections} modalObject={modalObject} setIsOpenModal={setIsOpenModal} />
+            }
+            {isOpenAddModal &&
+                <AddWordModal sections={sections} setIsOpenAddModal={setIsOpenAddModal} curSubject={curSubject} />
             }
 
 

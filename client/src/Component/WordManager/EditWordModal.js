@@ -1,21 +1,12 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useCallback } from "react";
 import Select from 'react-select'
 
-function WordModal({ sections, modalObject, setIsOpenModal }) {
+function EditWordModal({ sections, modalObject, setIsOpenModal }) {
 
     const word = modalObject.word;
     const section = modalObject.section;
-    console.log(modalObject.section);
-    const [formData, setFormData] = useState({
-        curSection: {},
-        inputEng: '',
-        type1: {},
-        type2: {},
-        define1: '',
-        define2: ''
-      });
+    const define = word.vietnamese;
 
-    const [title, setTitle] = useState("");
     console.log("checking render -------------------");
     const TypeOptions = [
         { value: 'n', label: 'Noun' },
@@ -28,7 +19,6 @@ function WordModal({ sections, modalObject, setIsOpenModal }) {
     function getDefaultSelect(value) {
         switch (value) {
             case 'n':
-                console.log("---------------------------------",  TypeOptions[0])
                 return TypeOptions[0];
             case 'adj':
                 return TypeOptions[1];
@@ -41,50 +31,49 @@ function WordModal({ sections, modalObject, setIsOpenModal }) {
             default:
                 return;
         }
-      
+
     }
+    const [formInputData, setFormInputData] = useState({
+        inputEng: word['english'],
+        define1: define[0]?.define !== undefined ? define[0].define : '',
+        define2: define[1]?.define !== undefined ? define[1].define : ''
 
-    const isEdit = modalObject.isEdit;
-    useEffect(() => {
-        if (isEdit) {
-            setTitle('Edit Word');
-            const define = word.vietnamese;
-            setFormData({
-                curSection: { value: section['_id']['$oid'], label: section['name'] },
-                inputEng: word['english'],
-                type1: define[0]?.type !== undefined ? getDefaultSelect(define[0].type) : '',
-                type2: define[1]?.type !== undefined ? getDefaultSelect(define[1].type) : '',
-                define1: define[0]?.define !== undefined ? define[0].define : '',
-                define2: define[1]?.define !== undefined ? define[1].define : ''
-            });
-            
-            // word.vietnamese.forEach((define, index) => {
-            //     switch (index) {
-            //         case 0:
-            //             setDefine1(define.define);
-            //             setType1(define.type);
-            //             break
+    })
 
-            //         default:
-            //             setDefine2(define.define);
-            //             setType2(define.type);
-            //             break
-            //     }
-            // })
+    const [selectedSection, setSelectedSection] = useState({ value: section['_id']['$oid'], label: section['name'] });
+    const [selectedType1, setSelectedType1] = useState(define[0]?.type !== undefined ? getDefaultSelect(define[0].type) : '');
+    const [selectedType2, setSelectedType2] = useState(define[1]?.type !== undefined ? getDefaultSelect(define[1].type) : '');
 
-        }
-        else {
-            setTitle('New Word');
-        }
-    }, [isEdit]);
 
-    
     const SectionOptions = [];
     sections.forEach(section => {
         SectionOptions.push({ value: section['_id']['$oid'], label: section['name'] })
     })
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        setFormInputData((prevData) => ({
+            ...prevData,
+            [name]: value,
+        }));
+    };
 
+    const handleChangeSection = (selectedOption) => {
+        setSelectedSection(selectedOption);
+        // Handle other logic based on the selected option
+    };
+    const handleChangeType1 = (selectedOption) => {
+        setSelectedType1(selectedOption);
+        // Handle other logic based on the selected option
+    };
+    const handleChangeType2 = (selectedOption) => {
+        setSelectedType2(selectedOption);
+        // Handle other logic based on the selected option
+    };
 
+    const handleClear = () => {
+        setFormInputData({'define2':''});
+        setSelectedType2(null);
+    }
 
     const handleSubmit = useCallback(
         async (e) => {
@@ -106,27 +95,30 @@ function WordModal({ sections, modalObject, setIsOpenModal }) {
                         <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
                             {/*header*/}
                             <div className="flex items-start justify-between p-3 border-b border-solid border-blueGray-200 rounded-t">
-                                <div className="text-2xl font-semibold select-none">{title}</div>
+                                <div className="text-2xl font-semibold select-none">Edit word</div>
                             </div>
                             {/*body*/}
                             <div className="relative p-6 text-left text-sm">
                                 <div>
                                     <div className="py-2">
-                                        <Select 
+                                        <Select
                                             className=""
-                                            name="section_of_word" 
-                                            options={SectionOptions} 
-                                            value={formData.curSection}
-                                            required={true} />
+                                            name="curSection"
+                                            options={SectionOptions}
+                                            value={selectedSection}
+                                            required={true}
+                                            onChange={handleChangeSection}
+
+                                        />
 
                                     </div>
                                     <div className="py-2">
                                         <input
                                             type="text"
                                             className="w-full px-2 py-2 border border-gray-300 rounded-sm outline-none"
-                                            name="english"
+                                            name="inputEng"
                                             placeholder="Enter english word ..."
-                                            value={formData.inputEng}
+                                            value={formInputData.inputEng}
                                             // onChange={handleChange}
 
                                             required={true}
@@ -137,9 +129,10 @@ function WordModal({ sections, modalObject, setIsOpenModal }) {
                                         <div className="flex lg:flex-row md:flex-row sm:flex-row flex-col gap-2 py-1">
                                             <Select
                                                 className="lg:w-56 w-full"
-                                                name="type_of_word_1"
+                                                name="type1"
                                                 options={TypeOptions} required={true}
-                                                value={formData.type1}
+                                                value={selectedType1}
+                                                onChange={handleChangeType1}
                                             />
 
                                             <input
@@ -147,8 +140,9 @@ function WordModal({ sections, modalObject, setIsOpenModal }) {
                                                 name="define1"
                                                 className="w-full p-2 border border-gray-300 rounded-sm outline-none"
                                                 placeholder="Enter define 1 ..."
-                                                value={formData.define1}
+                                                value={formInputData.define1}
                                                 required={true}
+                                                onChange={handleInputChange}
                                             >
                                             </input>
                                             <input className="w-10 text-gray-400" type="button" disabled={true} value={'Clear'}></input>
@@ -158,32 +152,32 @@ function WordModal({ sections, modalObject, setIsOpenModal }) {
                                         <div className="flex lg:flex-row md:flex-row sm:flex-row flex-col gap-2 py-1">
                                             <Select
                                                 className="lg:w-56 w-full"
-                                                name="type_of_word_2"
+                                                name="type2"
                                                 options={TypeOptions}
-                                                value={formData.type2}
-                                                required={false} />
+                                                value={selectedType2}
+                                                required={false}
+                                                onChange={handleChangeType2}
+                                            />
                                             <input
                                                 type="text"
                                                 name="define2"
                                                 className="w-full p-2 border border-gray-300 rounded-sm outline-none"
                                                 placeholder="Enter define 2 ..."
                                                 required={false}
-                                                value={formData.define2}
+                                                value={formInputData.define2}
+                                                onChange={handleInputChange}
                                             >
                                             </input>
-                                            <input className="w-10 cursor-pointer text-red-500 hover:underline" type="button" value={'Clear'}></input>
-
+                                            <input 
+                                            className="w-10 cursor-pointer text-red-500 hover:underline" 
+                                            type="button" 
+                                            value={'Clear'}
+                                            onClick={handleClear}
+                                            
+                                            ></input>
                                         </div>
-
-
-
-
                                     </div>
-                                    {/* \Define 2 */}
-                                    <div className="py-3 flex gap-4">
-
-
-                                    </div>
+                                 
                                 </div>
 
                             </div>
@@ -213,4 +207,4 @@ function WordModal({ sections, modalObject, setIsOpenModal }) {
         </>
     );
 }
-export default WordModal;
+export default EditWordModal;

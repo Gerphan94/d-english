@@ -30,14 +30,17 @@ function PageHeader({ setCurSubject }) {
     console.log(selectedOption);
   }
   return (
-    <>
+    <div className="flex gap-5">
+    
       <Select
         className="text-sm w-60 text-left font-normal"
         options={subjects}
         de
         onChange={handleChange}
       />
-    </>
+      
+      
+    </div>
 
 
   )

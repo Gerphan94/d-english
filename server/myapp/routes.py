@@ -84,18 +84,28 @@ def get_words(section_id):
     return json.loads(json_util.dumps(list(words)))
 
 # insert word
-@main.route('/api/add_word/<string:section_name>', methods=["POST"])
-def add_word(section_name):
-    
-    section = mongo.db.section.find_one_or_404({'name': section_name})
+@main.route('/api/add_word', methods=["POST"])
+def add_word():
+    data = request.get_json()
+    print("-------------------", data)
+    section_id = ObjectId(data['section'])
+    section = mongo.db.section.find_one_or_404({'_id': section_id})
     if section:
-        data = request.get_json()
         english = data['english']
-        vietnamese = data['vietnamese']
+        vietnamese = []
+        type1 =  data['type1']
+        define1 =  data['define1']
+        type2 =  data['type2']
+        define2 =  data['define2']
+        if (english == '') or (type1=='') or (define1==''):
+            return jsonify({"message": "bad request"}), 400
+        vietnamese.append({'type':type1, 'define':define1})
+        if (type2 != '') and (define2 != ''):
+            vietnamese.append({ 'type':type2, 'define':define2 })
         new_data = {
             'english': english,
             'vietnamese': vietnamese,
-            'section_name': section_name
+            'section_id': section_id
         }
         _id = mongo.db.word.insert_one(new_data).inserted_id
-        return jsonify({"message": "Success!"})
+        return jsonify({"message": "Success!"}), 200

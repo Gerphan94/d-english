@@ -103,7 +103,7 @@ function EditWordModal({ sections, modalObject, setIsOpenModal }) {
                                     <div className="py-2">
                                         <Select
                                             className=""
-                                            name="curSection"
+                                            name="section"
                                             options={SectionOptions}
                                             value={selectedSection}
                                             required={true}
@@ -116,7 +116,7 @@ function EditWordModal({ sections, modalObject, setIsOpenModal }) {
                                         <input
                                             type="text"
                                             className="w-full px-2 py-2 border border-gray-300 rounded-sm outline-none"
-                                            name="inputEng"
+                                            name="english"
                                             placeholder="Enter english word ..."
                                             value={formInputData.inputEng}
                                             // onChange={handleChange}

@@ -22,8 +22,6 @@ function AddWordModal({ sections }) {
             const form = e.target;
             const formData = new FormData(form);
             const formJson = Object.fromEntries(formData.entries());
-            console.log(formJson);
-            // /api/add_word
             try {
                 const response = await fetch(process.env.REACT_APP_API_URL + 'add_word', {
                     method: 'POST',
@@ -34,6 +32,7 @@ function AddWordModal({ sections }) {
                 });
                 if (response.ok) {
                     const data = await response.json();
+                    
                 }
             } catch (error) {
                 console.error('Error:', error.message);

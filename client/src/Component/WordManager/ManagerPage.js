@@ -32,14 +32,9 @@ function ManagerPage() {
     }, [curSubject]);
 
 
-    const handleOpenNewModal = (section) => {
+    const handleOpenNewModal = () => {
         setIsOpenAddModal(true);
-        setModalObject({
-            isEdit: false,
-            section: section,
-            word: {}
-        });
-
+       
     }
 
     return (

@@ -1,13 +1,10 @@
 import React, { useState, useCallback } from "react";
 import Select from 'react-select'
 
-function EditWordModal({ sections, modalObject, setIsOpenModal }) {
+function EditWordModal({ sections, section, editWord, setEditWord, words, setWords }) {
 
-    const word = modalObject.word;
-    const section = modalObject.section;
-    const define = word.vietnamese;
-
-    console.log("checking render -------------------");
+    const define = editWord['vietnamese'];
+    console.log("rending edit word form ---------------------------");
     const TypeOptions = [
         { value: 'n', label: 'Noun' },
         { value: 'adj', label: 'Adjective' },
@@ -34,7 +31,7 @@ function EditWordModal({ sections, modalObject, setIsOpenModal }) {
 
     }
     const [formInputData, setFormInputData] = useState({
-        inputEng: word['english'],
+        english: editWord['english'],
         define1: define[0]?.define !== undefined ? define[0].define : '',
         define2: define[1]?.define !== undefined ? define[1].define : ''
 
@@ -71,7 +68,7 @@ function EditWordModal({ sections, modalObject, setIsOpenModal }) {
     };
 
     const handleClear = () => {
-        setFormInputData({'define2':''});
+        setFormInputData({ 'define2': '' });
         setSelectedType2(null);
     }
 
@@ -82,6 +79,32 @@ function EditWordModal({ sections, modalObject, setIsOpenModal }) {
             const formData = new FormData(form);
             const formJson = Object.fromEntries(formData.entries());
             console.log(formJson);
+            try {
+                const response = await fetch(process.env.REACT_APP_API_URL + 'update_word/' + editWord['_id']['$oid'], {
+                    method: 'PATCH',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(formJson),
+                });
+                if (response.ok) {
+                    const data = await response.json();
+                    console.log('after -----',data);
+                    // // setWords([...sections, new_data])
+                    // const updatedWordList = words.map((item) =>
+                    //     item.id === id ? { ...item, word: editedWord } : item
+                    // );
+
+                    // setWordList(updatedWordList);
+                    setEditWord('');
+
+                }
+            } catch (error) {
+                console.error('Error:', error.message);
+            }
+
+            // update_word/<string:word_id></string:word_id>
+
         },
         [] // Dependency array is empty because there are no dependencies
     );
@@ -106,8 +129,7 @@ function EditWordModal({ sections, modalObject, setIsOpenModal }) {
                                             name="section"
                                             options={SectionOptions}
                                             value={selectedSection}
-                                            required={true}
-                                            onChange={handleChangeSection}
+                                            isDisabled={true}
 
                                         />
 
@@ -118,8 +140,8 @@ function EditWordModal({ sections, modalObject, setIsOpenModal }) {
                                             className="w-full px-2 py-2 border border-gray-300 rounded-sm outline-none"
                                             name="english"
                                             placeholder="Enter english word ..."
-                                            value={formInputData.inputEng}
-                                            // onChange={handleChange}
+                                            value={formInputData.english}
+                                            onChange={handleInputChange}
 
                                             required={true}
                                         ></input>
@@ -168,16 +190,16 @@ function EditWordModal({ sections, modalObject, setIsOpenModal }) {
                                                 onChange={handleInputChange}
                                             >
                                             </input>
-                                            <input 
-                                            className="w-10 cursor-pointer text-red-500 hover:underline" 
-                                            type="button" 
-                                            value={'Clear'}
-                                            onClick={handleClear}
-                                            
+                                            <input
+                                                className="w-10 cursor-pointer text-red-500 hover:underline"
+                                                type="button"
+                                                value={'Clear'}
+                                                onClick={handleClear}
+
                                             ></input>
                                         </div>
                                     </div>
-                                 
+
                                 </div>
 
                             </div>
@@ -186,7 +208,7 @@ function EditWordModal({ sections, modalObject, setIsOpenModal }) {
                                 <button
                                     className="text-red-500 background-transparent font-bold px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150 border-red-500 border opacity-80 hover:opacity-100"
                                     type="button"
-                                    onClick={() => setIsOpenModal(false)}
+                                    onClick={() => setEditWord('')}
                                 >
                                     Close
                                 </button>

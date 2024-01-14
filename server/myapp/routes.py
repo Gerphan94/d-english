@@ -87,7 +87,6 @@ def get_words(section_id):
 @main.route('/api/add_word', methods=["POST"])
 def add_word():
     data = request.get_json()
-    print("-------------------", data)
     section_id = ObjectId(data['section'])
     section = mongo.db.section.find_one_or_404({'_id': section_id})
     if section:
@@ -109,3 +108,37 @@ def add_word():
         }
         _id = mongo.db.word.insert_one(new_data).inserted_id
         return jsonify({"message": "Success!"}), 200
+    
+# Update word
+@main.route('/api/update_word/<string:word_id>', methods=["PATCH"])
+def update_word(word_id):
+    data = request.get_json()
+    _id = ObjectId(word_id)
+
+    english = data['english']
+    vietnamese = []
+    type1 =  data['type1']
+    define1 =  data['define1']
+    type2 =  data['type2']
+    define2 =  data['define2']
+    if (english == '') or (type1=='') or (define1==''):
+        return jsonify({"message": "bad request"}), 400
+    vietnamese.append({'type':type1, 'define':define1})
+    if (type2 != '') and (define2 != ''):
+        vietnamese.append({ 'type':type2, 'define':define2 })
+  
+    collection = mongo.db.word
+    query_criteria = {"_id": _id}  # Assuming you're updating based on the document's _id field
+
+    # Specify the update operation
+    update_operation = {"$set": {
+        'english': english,
+        'vietnamese': vietnamese
+        }}
+
+    # Perform the update
+    collection.update_one(query_criteria, update_operation)
+    new_data = collection.find_one({"_id": _id})
+
+    return json.loads(json_util.dumps(new_data))
+    

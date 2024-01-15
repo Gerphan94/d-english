@@ -88,17 +88,18 @@ function EditWordModal({ sections, section, editWord, setEditWord, words, setWor
                     body: JSON.stringify(formJson),
                 });
                 if (response.ok) {
-                    const data = await response.json();
-                    console.log('after -----',data);
-                    // // setWords([...sections, new_data])
-                    // const updatedWordList = words.map((item) =>
-                    //     item.id === id ? { ...item, word: editedWord } : item
-                    // );
-
-                    // setWordList(updatedWordList);
+                    const updatedWord = await response.json();
+                  
+                    console.log('after -----', updatedWord);
+                  
+                    // Update the state with the edited word
+                    const updatedWordList = words.map((item) =>
+                      item['_id']['$oid'] === updatedWord['_id']['$oid'] ? { ...item, ...updatedWord } : item
+                    );
+                  
+                    setWords(updatedWordList);
                     setEditWord('');
-
-                }
+                  }
             } catch (error) {
                 console.error('Error:', error.message);
             }

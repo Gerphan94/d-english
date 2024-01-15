@@ -54,19 +54,23 @@ function WordTable({ sections, section }) {
                       <button
                         className='cursor-pointer mx-1 hover:text-yellow-500'
                         onClick={() => setEditWord(word['_id']['$oid'])}
-
                       ><BsPencilSquare /></button>
                       <button
                         className='cursor-pointer mx-1 hover:text-red-500'
                         onClick={() => setIsDelete(true)}
                       >
-
                         <BsTrash /></button>
                     </div>
                   </td>
                 </tr>
                 {(editWord === word['_id']['$oid']) &&
-                  <EditWordModal sections={sections} section={section} editWord={word} setEditWord={setEditWord} />
+                  <EditWordModal 
+                    sections={sections} 
+                    section={section} 
+                    editWord={word} 
+                    setEditWord={setEditWord} 
+                    words={words} 
+                    setWords={setWords} />
                 }
               </>
 
